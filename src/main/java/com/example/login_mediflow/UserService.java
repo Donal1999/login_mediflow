@@ -23,4 +23,18 @@ public class UserService {
         return user;
     }
 
+    public Optional<User> updateUser( String username, User updateduser) {
+        Optional<User> maybeUser = userRepository.findByUserName(username);
+        if(maybeUser.isEmpty()) {
+            throw new IllegalArgumentException("User not found");
+        }
+        User user = maybeUser.get();
+        user.setPassword(updateduser.getPassword());
+        user.setRole(updateduser.getRole());
+        userRepository.save(user);
+        return Optional.of(user);
+
+
+    }
+
 }
