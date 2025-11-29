@@ -34,7 +34,13 @@ public class UserService {
         userRepository.save(user);
         return Optional.of(user);
 
+    }
 
+    public void deleteUser(String username) {
+        User user = userRepository.findByUserName(username)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        userRepository.delete(user);
     }
 
 }
