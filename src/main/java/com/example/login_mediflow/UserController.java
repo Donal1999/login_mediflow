@@ -29,6 +29,13 @@ public class UserController {
         return ResponseEntity.created(URI.create("api/users/" + createdUser.getUserName())).body(createdUser);
     }
 
-
+    @PutMapping("/{username}")
+    public ResponseEntity<User> updateUser(@Valid @PathVariable String username, @Valid @RequestBody User user) {
+        Optional<User> mahbe = userService.updateUser(username, user);
+        if (mahbe.isPresent()) {
+            return ResponseEntity.ok(mahbe.get());
+        }
+        return ResponseEntity.notFound().build();
+    }
 
 }
