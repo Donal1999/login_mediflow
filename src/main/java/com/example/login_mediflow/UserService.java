@@ -16,7 +16,11 @@ public class UserService {
     }
 
     public User createUser(User user) {
-       User user1 = userRepository.save(user);
-       return user1;
+        if(findByUserName(user.getUserName()).isPresent()) {
+            throw new IllegalArgumentException("Username already exists");
+        }
+        userRepository.save(user);
+        return user;
     }
+
 }
